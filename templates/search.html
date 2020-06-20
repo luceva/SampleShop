@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<title>{% block title %}{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<style>
+		body{
+		background: wheat;
+		}
+	</style>
+
+<body class="body">
+<div class="wrapper">
+<div class="search">
+  <div class="dropdown">
+    <!-- <button onclick="myFunction()" class="dropbtn">Search</button>
+    <div id="myDropdown" class="dropdown-content">
+      <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()"> -->
+      <form method="post">
+        <input name="Search" class = "search" id="Search" value="{{ t['Search'] }}" required>
+        <input type="submit" class = "submit" value="Submit">
+      </form>
+
+    </div>
+  </div>
+  {% if results %}
+  <div class="results">
+  {% for item in results %}
+    <div class="result card">
+      <div class="result image">
+        <img src='{{item.url}}' alt='Image unavaulable' width="100" height="70" onerror="this.onerror=null;this.src='https://onmilwaukee.com/images/articles/op/ope-is-a-word/ope-is-a-word_fullsize_story1.jpg?20171228132743';">
+      </div>
+      <div class="result text">
+        <div class="result title">
+          {{item.title}}
+        </div>
+        <div class="result price">
+          Price: ${{item.price}}
+        </div>
+        <div class="result qty">
+          Quantity: {{item.qty}}
+        </div>
+
+        <form action = "/{{ item.itemNum }}" method = "POST">
+          <input type = "submit" class="result details-btn" value="Details"/>
+        </form>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+  {% endif %}
+</div>
+</div>
+
+<script>
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+function filterFunction() {
+  var input, filter, ul, li, a, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  div = document.getElementById("myDropdown");
+  a = div.getElementsByTagName("a");
+  for (i = 0; i < a.length; i++) {
+    txtValue = a[i].textContent || a[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      a[i].style.display = "";
+    } else {
+      a[i].style.display = "none";
+    }
+  }
+}
+</script>
+
+
+</body>
+</html>

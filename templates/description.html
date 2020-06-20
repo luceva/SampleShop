@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<title>{% block title %}{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<style>
+		body{
+		background: wheat;
+		}
+	</style>
+</head>
+<body>
+	
+<!-- ON LEFT SIDE -  DISPLAY PICTURE OF ITEM-->
+  <div class = "split left">
+		<img src = "{{ url }}" alt = "Product image" width="300" height="200" >
+  </div>
+<!-- ON RIGHT SIDE	 -->
+  <div class = "split right">
+<!-- ADD DESCRIPTION OF PRODUCT -->
+ 	<div class = "description">
+		<!-- <label>Description:</label> -->
+		<h1>Item: {{ name }}</h1>
+ 		<p>Description: {{ desc }}</p>
+ 	</div>
+	
+	
+<!--DISPLAY AMOUNT IN STOCK -->
+ 	<div class = "stock-quantity">
+		<label>There is {{ qty }} left in stock.</label>
+ 	</div>
+	
+	
+<!-- DISPLAY PRICE OF PRODUCT -->
+ 	<div class = "price">
+		<label name="price">Price: ${{ price }}</label>
+ 	</div>
+<!--DISPLAY SHIPPING FEE -->
+ 	<div class = "shipping-fee">
+		<label>Shipping: ${{ shipping }}</label>
+ 	</div>
+
+<!-- ALLOW CUSTOMER TO SELECT AMOUNT OF ITEM THEY WANT -->
+
+<!--ADD TO CART -->
+	<div class = "customer-quantity">
+		<form action = "/{{ id }}/cart" method = "POST">
+			<label>Qty:</label>
+			<select name="qty">
+				{% for n in range(1, qty+1) %}
+					<option value="{{ n }}">{{ n }}</option>
+				{% endfor %}
+			</select>
+			<input type = "submit" class = "add-cart" value="Add to cart" />
+		</form>
+	</div>
+	<div class="search-button">
+		<i class="glyphicon glyphicon-search" onclick="searchPage()">Search</i>
+	</div>
+
+</div>
+
+<script>
+	function searchPage() {
+ 	   location.replace("{{ url_for('search') }}")
+	}
+</script>
+
+</body>
+</html>
